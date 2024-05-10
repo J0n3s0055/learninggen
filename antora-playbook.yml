@@ -1,0 +1,56 @@
+site:
+  title: NPJ Learning Resource
+  url: https://learning.LuxTechWriting.com
+  start_page: home::index.adoc
+  robots: disallow
+
+antora:
+  extensions:
+    - id: render-apidocs
+      require: ./lib/apidoc/apidoc-antora-extension
+      openapi-generator:
+        config: config/openapi-generator/asciidoc.yaml
+        templates: templates/openapi-generator/asciidoc
+    - ./lib/apidoc/apidoc-asciidoc-extension
+content:
+  edit_url: false
+  sources:
+
+    ### Local content
+  - url: .
+    start_path: content
+    branches: HEAD
+
+  #- url: https://github.com/J0n3s0055/about.git
+  #  start_path: /
+  #  branches: main
+
+  #- url: https://github.com/J0n3s0055/portfolio.git
+  # start_path: /
+  # branches: main
+
+  #- url: https://github.com/J0n3s0055/blog.git
+  #  start_path: /
+  #  branches: main
+
+  #- url: https://github.com/J0n3s0055/learning.git
+  #  start_path: /
+  #  branches: main
+
+urls:
+  # latest_version_segment_strategy: redirect:to
+  # latest_prerelease_version_segment: next
+  redirect_facility: static
+  # html_extension_style: indexify
+  # latest_version_segment: latest
+
+ui:
+  bundle:
+    # url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    url: https://github.com/J0n3s0055/antora-ui-default/releases/download/ui-bundle%2Fmain/ui-bundle.zip
+    snapshot: true
+  supplemental_files: ./content/supplemental-ui
+
+git:
+  fetch_concurrency: 1
+
