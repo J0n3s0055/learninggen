@@ -1,0 +1,44 @@
+name: Build and publish Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish_site:
+    name: "Build and publish site with Antora"
+    runs-on: [ubuntu-latest]
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      NODE_OPTIONS: '--max-old-space-size=8192'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js for use with actions
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install Corepack
+        run: npm install --prefix .node corepack
+
+      - name: Install Yarn
+        run: .node/node_modules/.bin/corepack enable --install-directory .node
+
+      - name: Install packages
+        run: .node/yarn install
+
+      - name: Generate site
+        run: yarn run build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.9
+        with:
+          # ACCESS_TOKEN: # optional
+          TOKEN: "${{ github.token}}"
+          FOLDER: build/site
+          BRANCH: 'gh-pages'
+          COMMIT-MESSAGE: "[CI] Publish Documentation for ${{ github.sha }}"
