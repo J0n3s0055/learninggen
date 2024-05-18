@@ -1,4 +1,4 @@
-:doctitle: Learning Resource
+
 
 * xref:home::index.adoc[Home]
 * xref:attachment$Module1_Lesson1-1/index.html[Lesson1]
